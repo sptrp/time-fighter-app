@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.animation.Animation
-import android.view.animation.AnimationUtils
+import android.view.animation.AnimationUtils.loadAnimation
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
@@ -17,16 +17,9 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-
     private val viewModel: GameViewModel by viewModels()
-
-    private val bounceAnimation: Animation by lazy {
-        AnimationUtils.loadAnimation(this, R.anim.bounce)
-    }
-
-    private val blinkAnimation: Animation by lazy {
-        AnimationUtils.loadAnimation(this, R.anim.blink)
-    }
+    private val bounceAnimation: Animation by lazy { loadAnimation(this, R.anim.bounce) }
+    private val blinkAnimation: Animation by lazy { loadAnimation(this, R.anim.blink) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,9 +58,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun displayAbout() {
-        val aboutDialog: DialogFragment = (supportFragmentManager.findFragmentByTag(AboutDialog.TAG)
-            ?: AboutDialog()) as DialogFragment
-        aboutDialog.show(supportFragmentManager, AboutDialog.TAG)
+        val aboutDialog = supportFragmentManager.findFragmentByTag(AboutDialog.TAG) ?: AboutDialog()
+        (aboutDialog as DialogFragment).show(supportFragmentManager, AboutDialog.TAG)
     }
 
 }
