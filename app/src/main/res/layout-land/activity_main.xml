@@ -1,77 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/time_left_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/time_left"
-        android:textSize="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.499"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/start_button" />
 
-    <TextView
-        android:id="@+id/score_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="28dp"
-        android:text="@string/score"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/start_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+    <data>
 
-    <Button
-        android:id="@+id/start_button"
-        android:layout_width="158dp"
-        android:layout_height="169dp"
-        android:text="@string/main_button"
-        app:cornerRadius="100dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <variable
+            name="viewmodel"
+            type="com.ivanponomarev.timefighter.ui.GameViewModel" />
+    </data>
 
-    <TextView
-        android:id="@+id/highscore_textview_one"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:text="@string/high_score_one"
-        app:layout_constraintEnd_toStartOf="@+id/start_button"
-        app:layout_constraintHorizontal_bias="0.537"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.MainActivity">
 
-    <TextView
-        android:id="@+id/highscore_textview_two"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:text="@string/high_score_two"
-        app:layout_constraintEnd_toStartOf="@+id/start_button"
-        app:layout_constraintHorizontal_bias="0.529"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/highscore_textview_one" />
+        <TextView
+            android:id="@+id/time_left_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@{viewmodel.secondsRemaining > 0 ? String.format(@string/time_left, viewmodel.secondsRemaining) : @string/game_done}"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.499"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/start_button"
+            tools:text="Time left: 10" />
 
-    <TextView
-        android:id="@+id/highscore_textview_three"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:text="@string/high_score_three"
-        app:layout_constraintEnd_toStartOf="@+id/start_button"
-        app:layout_constraintHorizontal_bias="0.537"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/highscore_textview_two" />
+        <TextView
+            android:id="@+id/score_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            android:text="@{String.format(@string/score, viewmodel.score)}"
+            android:textSize="35sp"
+            app:layout_constraintBottom_toTopOf="@+id/start_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="Score: 25" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/start_button"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:background="@drawable/tap_button_bg"
+            android:onClick="@{(v) -> viewmodel.incrementScore()}"
+            android:text="@string/main_button"
+            app:cornerRadius="100dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/highscore_textview_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:text="@{String.format(@string/high_score_one, viewmodel.highScores.get(0))}"
+            app:layout_constraintEnd_toStartOf="@+id/start_button"
+            app:layout_constraintHorizontal_bias="0.537"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="1st place: 333" />
+
+        <TextView
+            android:id="@+id/highscore_textview_two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="@{String.format(@string/high_score_two, viewmodel.highScores.get(1))}"
+            app:layout_constraintEnd_toStartOf="@+id/start_button"
+            app:layout_constraintHorizontal_bias="0.529"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/highscore_textview_one"
+            tools:text="2nd place: 222" />
+
+        <TextView
+            android:id="@+id/highscore_textview_three"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="@{String.format(@string/high_score_three, viewmodel.highScores.get(2))}"
+            app:layout_constraintEnd_toStartOf="@+id/start_button"
+            app:layout_constraintHorizontal_bias="0.537"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/highscore_textview_two"
+            tools:text="3rd place: 111" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

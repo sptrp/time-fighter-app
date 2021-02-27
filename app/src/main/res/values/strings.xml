@@ -1,14 +1,16 @@
 <resources>
     <string name="app_name">Time Fighter</string>
     <string name="score">Score: %1$d</string>
-    <string name="high_score_one">1th place: %1$d</string>
+    <string name="high_score_one">1st place: %1$d</string>
     <string name="high_score_two">2nd place: %1$d</string>
     <string name="high_score_three">3rd place: %1$d</string>
     <string name="time_left">Time left: %1$d</string>
     <string name="main_button">Tap me!</string>
 
-    <string name="game_finished">Final Score: %1$d. Press button to start again</string>
+    <string name="game_finished">Final Score: %1$d. Long-press and then tap the button to restart.</string>
     <string name="aboutMenu">About</string>
     <string name="aboutTitle">Time Fighter %1$s</string>
+    <string name="game_ready">Game Ready!</string>
+    <string name="game_done">Game finished</string>
     <string name="aboutMessage"><a href="https://www.linkedin.com/in/ivan-ponomarev-38222018a">Created by Ivan Ponomarev</a></string>
 </resources>
